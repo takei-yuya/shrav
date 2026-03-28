@@ -1,8 +1,14 @@
 # SHRAV Scoring & Selection Guide
 
+## 前提: 雑談フィルタ通過後のみスコアリングする
+
+スコアリングの対象は、**Workflow 1のステップ3で雑談と判定されたもののみ**。
+仕事に関係する投稿はスコアに関わらず絶対に含めない。
+スコアリングは「どの雑談を優先するか」の選別であり、仕事を引き上げる手段ではない。
+
 ## Step 1: Tag Each Candidate Post
 
-For each candidate post from the harvest, infer 1–5 short topic tags in Japanese (e.g., `旅行`, `ゲーム`, `猫`, `Python`, `映画`). These tags are stored in `shrav-feedback.md` under `topic_tags` and used for profile derivation.
+For each candidate post from the harvest, infer 1–5 short topic tags in Japanese (e.g., `旅行`, `ゲーム`, `猫`, `映画`, `グルメ`). **仕事系タグ（`開発`, `バグ`, `MTG` 等）がつくような投稿はフィルタ漏れなので除外する。** Tags are stored in `shrav-feedback.md` under `topic_tags` and used for profile derivation.
 
 ## Step 2: Score Each Post
 

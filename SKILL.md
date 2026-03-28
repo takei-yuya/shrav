@@ -43,7 +43,25 @@ See `references/state-formats.md` for exact schemas.
 
 1. **Read config** from `shrav-config.md`. Get `last_harvest_ts`, `channels`, `max_topics`.
 2. **Collect posts**: For each channel, call `slack readMessages` and keep only messages newer than `last_harvest_ts`. Use `limit: 100` per channel.
-3. **Filter casual/non-work**: Use your judgment to filter out messages that are clearly work-related (task assignments, PR reviews, incident alerts, meeting notes, announcements). Keep conversational, personal, curious, playful messages — i.e., *雑談*.
+3. **Filter: 雑談のみ残す（仕事は絶対に除外）**: SHRAVのコンセプトは「雑談でコミュニケーションを活性化すること」。以下の基準で厳格にフィルタリングする。
+
+   **✅ 雑談として残すもの（すべて該当する必要はない）:**
+   - 個人的な体験・気づき・近況報告（「週末〇〇行ってきた」「最近〇〇にハマってる」）
+   - 趣味・娯楽・食・旅行・ペット・音楽・映画・ゲームなどの話題
+   - 世間話・ジョーク・面白いリンク・雑感
+   - 「ちょっと聞いてよ」系の投稿
+   - 絵文字だけ・スタンプ的な反応でも文脈が雑談なら可
+
+   **❌ 仕事として除外するもの（1つでも該当したら除外）:**
+   - タスク依頼・進捗報告・締め切り・KPI・予算・数値目標
+   - PRレビュー・バグ報告・インシデント・デプロイ・リリース
+   - 会議の設定・議事録・MTG summary
+   - 採用・人事・評価・組織変更
+   - ツール導入・インフラ・セキュリティの話
+   - お知らせ・アナウンス・全社連絡
+   - 「〇〇さん、確認お願いします」のような依頼形式
+
+   **グレーゾーンは「仕事寄りか？」で判断: 少しでも仕事の匂いがするなら除外する。**
 4. **Deduplicate**: Discard any post whose permalink already appears in `shrav-feedback.md` (already shown).
 5. **Load profile** from `shrav-profiling.md` (if it exists).
 6. **Score & select**: See `references/scoring-guide.md` for the scoring algorithm. Select up to `max_topics` posts.
